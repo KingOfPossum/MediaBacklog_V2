@@ -1,7 +1,7 @@
 CC = gcc
 
 CFLAGS = -Os -s -flto=auto 
-LDFLAGS = -lcurl -s -flto=auto -lws2_32
+LDFLAGS = -lcurl -s -flto=auto
 
 SRCS = main.c server.c database.c databaseManager.c sqlite3.c api.c curl_http.c igdb_wrapper.c cJSON.c
 OBJS = $(SRCS:.c=.o)

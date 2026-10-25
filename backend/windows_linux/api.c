@@ -13,7 +13,6 @@
   #include <netinet/in.h>
   #include <arpa/inet.h>
   #include <unistd.h>
-  #include <Arduino.h>
 
   #define socketType int
   #define close_socket close
