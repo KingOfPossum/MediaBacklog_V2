@@ -151,3 +151,6 @@ vite.config.ts.timestamp-*
 *.db
 *.exe
 *.o
+
+.pio/
+.vscode/
