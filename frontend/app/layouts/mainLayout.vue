@@ -4,9 +4,9 @@ import MainHeader from '~/components/mainHeader.vue'
 </script>
 
 <template>
-  <div class="flex flex-col min-h-screen">
+  <div class="flex flex-col h-screen overflow-hidden">
     <MainHeader />
-    <div class="flex flex-1 p-6">
+    <div class="flex flex-1 p-6 overflow-hidden">
       <MainSidebar />
       <slot />
     </div>

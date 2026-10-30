@@ -5,7 +5,5 @@ definePageMeta({
 </script>
 
 <template>
-  <div>
-    <span>Test</span>
-  </div>
+  <GameView />
 </template>
