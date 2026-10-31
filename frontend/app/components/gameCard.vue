@@ -12,19 +12,24 @@ defineProps<{ game: Game }>()
     <div class="flex flex-row gap-2">
       <div class="h-40 flex-1">
         <img
+          id="game_cover"
           :src="game.img"
-          :alt="game.name"
           width="50%"
           class="rounded-lg object-cover h-full w-auto"
+          onerror="this.src='/images/placeholder.jpg'"
         >
       </div>
       <div class="flex-1">
-        <div>
-          <div class="mb-10 text-sm">
+        <div class="flex flex-col gap-8 text-sm italic">
+          <div>
             <span>Consoles:</span>
           </div>
-          <div class="text-sm">
-            <span>Time to finish:</span>
+          <div>
+            <span>Duration:</span>
+          </div>
+          <div class="flex flex-col">
+            <span>Status:</span>
+            <StatusDisplay :status="PlayStatus.NotPlayed" />
           </div>
         </div>
       </div>
