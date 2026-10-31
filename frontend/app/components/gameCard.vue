@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Game } from '~/types/game'
+import PlayTimeDisplay from "~/components/playTimeDisplay.vue";
 
 defineProps<{ game: Game }>()
 </script>
@@ -20,16 +21,17 @@ defineProps<{ game: Game }>()
         >
       </div>
       <div class="flex-1">
-        <div class="flex flex-col gap-8 text-sm italic">
+        <div class="flex flex-col gap-5 text-sm italic">
           <div>
             <span>Consoles:</span>
           </div>
-          <div>
+          <div class="flex flex-col gap-1">
             <span>Duration:</span>
+            <PlayTimeDisplay :time="game.playTime"/>
           </div>
-          <div class="flex flex-col">
+          <div class="flex flex-col gap-1">
             <span>Status:</span>
-            <StatusDisplay :status="PlayStatus.NotPlayed" />
+            <StatusDisplay :status="game.status" />
           </div>
         </div>
       </div>
