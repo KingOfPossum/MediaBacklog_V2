@@ -1,7 +1,10 @@
 <template>
   <UHeader>
     <template #default>
-      <UInput placeholder="search..." />
+      <UInput
+        icon="akar-icons:search"
+        placeholder="search..."
+      />
     </template>
   </UHeader>
 </template>

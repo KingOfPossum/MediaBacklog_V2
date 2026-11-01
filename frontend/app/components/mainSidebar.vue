@@ -9,6 +9,7 @@ const items = ref<NavigationMenuItem[]>([
   {
     label: 'Games',
     icon: 'i-lucide-gamepad-2',
+    defaultOpen: true,
     children: [
       {
         label: 'Library'
@@ -21,6 +22,7 @@ const items = ref<NavigationMenuItem[]>([
   {
     label: 'Books',
     icon: 'i-lucide-book',
+    defaultOpen: true,
     children: [
       {
         label: 'Library'
