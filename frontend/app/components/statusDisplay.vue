@@ -2,11 +2,10 @@
 import { PlayStatus } from '~/types/playStatus.ts'
 
 defineProps<{ status: PlayStatus }>()
-const colors = ["error","warning","success","info"]
+const colors = ['error', 'warning', 'success', 'info']
 
 const getStatusName = (status: PlayStatus) => {
-  let name = PlayStatus[status]
-  return name.replace(/([a-z])([A-Z])/g, '$1 $2')
+  return PlayStatus[status].replace(/([a-z])([A-Z])/g, '$1 $2')
 }
 </script>
 
