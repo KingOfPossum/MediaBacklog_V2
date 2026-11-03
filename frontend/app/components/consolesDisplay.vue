@@ -1,5 +1,9 @@
 <script setup lang="ts">
 defineProps<{ consoles: object }>()
+
+const normalizeConsole = (console: string) => {
+  return console.replace(' ', '')
+}
 </script>
 
 <template>
@@ -8,7 +12,7 @@ defineProps<{ consoles: object }>()
       v-for="console in consoles"
       class="size-8"
     >
-      <img :src="`/consoleIcons/${console}.svg`" >
+      <img :src="`/consoleIcons/${normalizeConsole(console)}.svg`">
     </div>
   </div>
 </template>
