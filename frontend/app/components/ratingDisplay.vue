@@ -1,5 +1,11 @@
 <script setup lang="ts">
-defineProps<{ rating: number }>()
+const props = defineProps<{ rating: number, selectable?: boolean }>()
+
+const emit = defineEmits<{
+  (e: 'update:rating', value: number): void
+}>()
+
+const hoverRating = ref<number | null>(null)
 
 const getRatingIcon = (gameRating: number, iconNum: number) => {
   const lowerBounds = (iconNum - 1) * 5
@@ -26,14 +32,43 @@ const getRatingIcon = (gameRating: number, iconNum: number) => {
       return '/ratingIcons/star_empty.svg'
   }
 }
+
+const showSelectedRating = (iconNum: number) => {
+  const current = hoverRating.value ?? props.rating
+  return getRatingIcon(current, iconNum)
+}
+
+const handleStarClick = (i: number) => {
+  emit('update:rating', i * 5)
+}
 </script>
 
 <template>
-  <div class="flex flex-row">
-    <img
-      v-for="i in 5"
-      :key="i"
-      :src="getRatingIcon(rating, i)"
-    />
+  <div>
+    <div
+      v-if="selectable"
+      class="flex flex-row"
+      @mouseleave="hoverRating=null"
+    >
+      <img
+        v-for="i in 5"
+        :key="i"
+        :src="showSelectedRating(i)"
+        alt=""
+        class="hover:scale-120 transition-transform"
+        @mouseenter="hoverRating = i * 5"
+        @click="handleStarClick(i)"
+      >
+    </div>
+    <div
+      v-else
+      class="flex flex-row"
+    >
+      <img
+        v-for="i in 5"
+        :key="i"
+        :src="getRatingIcon(rating, i)"
+      >
+    </div>
   </div>
 </template>
