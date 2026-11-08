@@ -2,6 +2,7 @@
 import type { Game } from '~/types/game'
 import PlayTimeDisplay from '~/components/playTimeDisplay.vue'
 import ConsolesDisplay from '~/components/consolesDisplay.vue'
+import RatingDisplay from "~/components/ratingDisplay.vue";
 
 defineProps<{ game: Game }>()
 </script>
@@ -9,7 +10,7 @@ defineProps<{ game: Game }>()
 <template>
   <UCard
     :title="game.name"
-    class="hover:scale-110 transition-transform duration-400 h-full"
+    class="hover:scale-110 hover:cursor-pointer transition-transform duration-400 delay-50 h-full"
   >
     <div class="flex flex-row gap-2">
       <div class="h-40 flex-1">
@@ -20,6 +21,9 @@ defineProps<{ game: Game }>()
           class="rounded-lg object-cover h-full w-auto"
           onerror="this.src='/images/placeholder.jpg'"
         >
+        <div class="ml-3  ">
+          <RatingDisplay :rating="game.rating" />
+        </div>
       </div>
       <div class="flex-1">
         <div class="flex flex-col gap-1 text-sm italic">

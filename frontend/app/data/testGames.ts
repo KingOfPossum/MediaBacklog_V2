@@ -8,7 +8,8 @@ export const games: Game[] = [
     img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co3w4w.webp',
     status: PlayStatus.Completed,
     playTime: 7,
-    consoles: ['GameCube']
+    consoles: ['GameCube'],
+    rating: 25
   },
   {
     id: 2,
@@ -16,7 +17,8 @@ export const games: Game[] = [
     img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1mxf.webp',
     status: PlayStatus.Completed,
     playTime: 20,
-    consoles: ['Switch']
+    consoles: ['Switch'],
+    rating: 19
   },
   {
     id: 3,
@@ -24,7 +26,8 @@ export const games: Game[] = [
     img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co70qn.webp',
     status: PlayStatus.NotPlayed,
     playTime: 4,
-    consoles: ['SNES']
+    consoles: ['SNES'],
+    rating: 14
   },
   {
     id: 4,
@@ -32,7 +35,8 @@ export const games: Game[] = [
     img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co3p5n.webp',
     status: PlayStatus.Completed,
     playTime: 6,
-    consoles: ['PC']
+    consoles: ['PC'],
+    rating: 18
   },
   {
     id: 5,
@@ -40,7 +44,8 @@ export const games: Game[] = [
     img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co3nnx.webp',
     status: PlayStatus.Completed,
     playTime: 15,
-    consoles: ['N64', '3DS', 'Switch 2']
+    consoles: ['N64', '3DS', 'Switch 2'],
+    rating: 19
   },
   {
     id: 6,
@@ -48,7 +53,8 @@ export const games: Game[] = [
     img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/cob9s9.webp',
     status: PlayStatus.Started,
     playTime: 40,
-    consoles: ['Switch 2']
+    consoles: ['Switch 2'],
+    rating: 16
   },
   {
     id: 7,
@@ -56,7 +62,8 @@ export const games: Game[] = [
     img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/cobw10.webp',
     status: PlayStatus.Completed,
     playTime: 12,
-    consoles: ['PS2']
+    consoles: ['PS2'],
+    rating: 17
   },
   {
     id: 8,
@@ -64,7 +71,8 @@ export const games: Game[] = [
     img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co3mpk.webp',
     status: PlayStatus.Completed,
     playTime: 30,
-    consoles: ['PS2']
+    consoles: ['PS2'],
+    rating: 20
   },
   {
     id: 9,
@@ -72,7 +80,8 @@ export const games: Game[] = [
     img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co67mq.webp',
     status: PlayStatus.Completed,
     playTime: 5,
-    consoles: ['PS2']
+    consoles: ['PS2'],
+    rating: 16
   },
   {
     id: 10,
@@ -80,7 +89,8 @@ export const games: Game[] = [
     img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co289i.webp',
     status: PlayStatus.Aborted,
     playTime: 13,
-    consoles: ['N64']
+    consoles: ['N64'],
+    rating: 14
   },
   {
     id: 11,
@@ -88,7 +98,8 @@ export const games: Game[] = [
     img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1pek.webp',
     status: PlayStatus.Completed,
     playTime: 7,
-    consoles: ['GameCube']
+    consoles: ['GameCube'],
+    rating: 14
   },
   {
     id: 12,
@@ -96,7 +107,8 @@ export const games: Game[] = [
     img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co21i5.webp',
     status: PlayStatus.Completed,
     playTime: 6,
-    consoles: ['Wii']
+    consoles: ['Wii'],
+    rating: 13
   },
   {
     id: 13,
@@ -104,6 +116,7 @@ export const games: Game[] = [
     img: '://images.igdb.com/igdb/image/upload/t_cover_big/co9o9n.webp',
     status: PlayStatus.Completed,
     playTime: 15,
-    consoles: ['Wii']
+    consoles: ['Wii'],
+    rating: 17
   }
 ]

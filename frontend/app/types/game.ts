@@ -6,5 +6,6 @@ export type Game = {
   img: string
   status: PlayStatus
   playTime: number
-  consoles: [string]
+  consoles: string[]
+  rating: number
 }
