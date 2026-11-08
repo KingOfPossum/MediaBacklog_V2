@@ -7,7 +7,10 @@ const { timeRange } = useTimeFilter()
 <template>
   <div>
     <UPopover arrow>
-      <UButton label="Time" />
+      <UButton
+        label="Time"
+        class="hover:cursor-pointer"
+      />
 
       <template #content>
         <div class="w-33">
@@ -22,7 +25,7 @@ const { timeRange } = useTimeFilter()
           </div>
           <div class="ml-4 pb-2 flex flex-row gap-6 text-sm">
             <div class="size-5">
-              <span>{{ timeRange[0] + 'h'}}</span>
+              <span>{{ timeRange[0] + 'h' }}</span>
             </div>
             <div>
               <span>-</span>

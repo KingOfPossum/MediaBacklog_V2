@@ -14,7 +14,10 @@ const uncheckAll = () => {
 <template>
   <div>
     <UPopover arrow>
-      <UButton :label="label" />
+      <UButton
+        :label="label"
+        class="hover:cursor-pointer"
+      />
 
       <template #content>
         <div class="pl-2 pt-2 pr-5 pb-2">

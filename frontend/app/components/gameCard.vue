@@ -22,7 +22,10 @@ defineProps<{ game: Game }>()
           onerror="this.src='/images/placeholder.jpg'"
         >
         <div class="ml-3  ">
-          <RatingDisplay :rating="game.rating" />
+          <RatingDisplay
+            :rating="game.rating"
+            :selectable="false"
+          />
         </div>
       </div>
       <div class="flex-1">
