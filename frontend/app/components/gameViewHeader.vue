@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { TimeFilterPopover } from '#components'
+import { TimeFilterPopover, RatingFilterPopover } from '#components'
 </script>
 
 <template>
-  <div class="flex flex-row gap-45">
+  <div class="flex flex-row gap-33">
     <div class="mb-5 flex flex-row gap-5">
       <span class="pt-1">Filter: </span>
       <ConsoleFilterPopover />
       <StatusFilterPopover />
       <TimeFilterPopover />
+      <RatingFilterPopover />
     </div>
     <div>
       <GameViewSearchBar />
