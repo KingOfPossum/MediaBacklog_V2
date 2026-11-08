@@ -3,8 +3,6 @@ import type { Game } from '~/types/game'
 import PlayTimeDisplay from '~/components/playTimeDisplay.vue'
 import ConsolesDisplay from '~/components/consolesDisplay.vue'
 
-const testConsoles = ['N64', 'PS1', 'GameCube']
-
 defineProps<{ game: Game }>()
 </script>
 
@@ -27,7 +25,7 @@ defineProps<{ game: Game }>()
         <div class="flex flex-col gap-1 text-sm italic">
           <div class="flex flex-col gap-1">
             <span>Consoles:</span>
-            <ConsolesDisplay :consoles="testConsoles" />
+            <ConsolesDisplay :consoles="game.consoles" />
           </div>
           <div class="flex flex-col gap-1">
             <span>Duration:</span>

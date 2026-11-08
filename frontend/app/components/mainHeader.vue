@@ -9,7 +9,7 @@ const { searchQuery } = searchBar()
     <template #default>
       <UInput
         v-model="searchQuery"
-        icon="akar-icons:search"
+        icon="andrsrxn:search"
         placeholder="search..."
       />
     </template>
