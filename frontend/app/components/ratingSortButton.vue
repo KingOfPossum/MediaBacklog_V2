@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { useRatingSort } from '~/composables/ratingSort'
 
-const { sortAscending } = useRatingSort()
+const { sortRatingAscending } = useRatingSort()
 const currentIcon = computed(() => {
-  return sortAscending.value ? 'cil:sort-ascending' : 'cil:sort-descending'
+  return sortRatingAscending.value ? 'cil:sort-ascending' : 'cil:sort-descending'
 })
 
 const toggleAscending = () => {
-  sortAscending.value = !sortAscending.value
+  sortRatingAscending.value = !sortRatingAscending.value
 }
 </script>
 

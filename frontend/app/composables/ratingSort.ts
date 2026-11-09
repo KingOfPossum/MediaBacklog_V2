@@ -1,5 +1,5 @@
 export const useRatingSort = () => {
-  const sortAscending = useState('sortAscending', () => { return false })
+  const sortRatingAscending = useState('sortRatingAscending', () => { return false })
 
-  return { sortAscending }
+  return { sortRatingAscending }
 }
