@@ -4,3 +4,16 @@ export enum PlayStatus {
   Completed = 2,
   Aborted = 3
 }
+
+export const convertToPlayStatus = (txt: string) => {
+  if (txt === 'Not Played') {
+    return PlayStatus.NotPlayed
+  } else if (txt === 'Started') {
+    return PlayStatus.Started
+  } else if (txt === 'Completed') {
+    return PlayStatus.Completed
+  } else if (txt === 'Aborted') {
+    return PlayStatus.Aborted
+  }
+  return PlayStatus.NotPlayed
+}

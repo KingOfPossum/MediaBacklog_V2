@@ -1,7 +1,7 @@
 import type { Game } from '~/types/game.ts'
 import { PlayStatus } from '~/types/playStatus.ts'
 
-export const games: Game[] = [
+export const games: Ref<Game[]> = ref([
   {
     id: 1,
     name: 'Metroid Prime',
@@ -119,4 +119,4 @@ export const games: Game[] = [
     consoles: ['Wii'],
     rating: 17
   }
-]
+])

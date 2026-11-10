@@ -23,6 +23,7 @@ const toggleAscending = () => {
       label="Rating"
       :icon="currentIcon"
       :color="filterType === 'rating' ? 'primary' : 'secondary'"
+      class="hover:cursor-pointer"
       @click="toggleAscending"
     />
   </div>

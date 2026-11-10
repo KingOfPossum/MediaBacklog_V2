@@ -23,6 +23,7 @@ const toggleAscending = () => {
       label="Duration"
       :icon="currentIcon"
       :color="filterType === 'time' ? 'primary' : 'secondary'"
+      class="hover:cursor-pointer"
       @click="toggleAscending"
     />
   </div>
