@@ -20,19 +20,14 @@ export const useGamesFilter = () => {
   const filterType = useState('filterType', () => { return 'rating' })
 
   const filteredGames = computed(() => {
-    console.log(games.value)
-    return games.value
-  })
-
-  /**
-  const filteredGames = computed(() => {
     return games.value.filter((item) => {
       const searchFilter = (searchQuery.value.length > 0 && item.name.toLowerCase().includes(searchQuery.value.toLowerCase())) || searchQuery.value.length === 0
       const consoleFilter = item.consoles.some(console => activatedConsoles.value.includes(console))
       const statusFilter = activatedStatus.value.includes(PlayStatus[item.status])
-      const timeFilter = item.playTime > timeRange.value[0] && item.playTime < timeRange.value[1]
+      const timeFilter = item.playTime > timeRange.value[0] && ((item.playTime < timeRange.value[1]) || (timeRange.value[1] >= 50))
       const ratingFilter = item.rating >= minRating.value && item.rating <= maxRating.value
 
+      //return searchFilter && consoleFilter && statusFilter && timeFilter && ratingFilter
       return searchFilter && consoleFilter && statusFilter && timeFilter && ratingFilter
     }).sort((a: Game, b: Game) => {
       if (filterType.value === 'rating') {
@@ -48,7 +43,6 @@ export const useGamesFilter = () => {
       }
     })
   })
-  **/
 
   return { filteredGames, filterType }
 }

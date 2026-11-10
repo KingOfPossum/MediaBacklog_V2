@@ -14,7 +14,7 @@ export const useGames = () => {
         name: game['game_infos']['name'],
         img: game['igdb_infos']['cover_url'],
         status: PlayStatus.Started,
-        playTime: game['game_infos']['completionist_length'] > 0 ? game['game_infos']['completionist_length'] : 1,
+        playTime: game['game_infos']['main_story_length'] > 0 ? game['game_infos']['main_story_length'] / 3600 : 1,
         consoles: game['consoles'],
         rating: 23
       }
