@@ -27,7 +27,6 @@ export const useGamesFilter = () => {
       const timeFilter = item.playTime > timeRange.value[0] && ((item.playTime < timeRange.value[1]) || (timeRange.value[1] >= 50))
       const ratingFilter = item.rating >= minRating.value && item.rating <= maxRating.value
 
-      //return searchFilter && consoleFilter && statusFilter && timeFilter && ratingFilter
       return searchFilter && consoleFilter && statusFilter && timeFilter && ratingFilter
     }).sort((a: Game, b: Game) => {
       if (filterType.value === 'rating') {

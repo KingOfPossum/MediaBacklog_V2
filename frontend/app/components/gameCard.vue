@@ -9,6 +9,7 @@ defineProps<{ game: Game }>()
 
 <template>
   <UCard
+    :ui="{ title: 'truncate' }"
     :title="game.name"
     class="hover:scale-110 hover:cursor-pointer transition-transform duration-400 delay-50 h-full"
   >
