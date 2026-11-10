@@ -7,7 +7,7 @@ import { useTimeSort } from '~/composables/timeSort.ts'
 import { useRatingFilter } from '~/composables/ratingFilter.ts'
 import { useRatingSort } from '~/composables/ratingSort.ts'
 
-export const gamesFilter = () => {
+export const useGamesFilter = () => {
   const { searchQuery } = searchBar()
   const { activatedConsoles } = useConsoleFilter()
   const { activatedStatus } = useStatusFilter()
@@ -15,6 +15,8 @@ export const gamesFilter = () => {
   const { sortTimeAscending } = useTimeSort()
   const { minRating, maxRating } = useRatingFilter()
   const { sortRatingAscending } = useRatingSort()
+
+  const filterType = useState('filterType', () => { return 'rating' })
 
   const filteredGames = computed(() => {
     return games.filter((item) => {
@@ -26,16 +28,19 @@ export const gamesFilter = () => {
 
       return searchFilter && consoleFilter && statusFilter && timeFilter && ratingFilter
     }).sort((a: Game, b: Game) => {
-      // if (sortRatingAscending.value) {
-      //  return a.rating - b.rating
-      // }
-      // return b.rating - a.rating
-      if (sortTimeAscending.value) {
-        return a.playTime - b.playTime
+      if (filterType.value === 'rating') {
+        if (sortRatingAscending.value) {
+          return a.rating - b.rating
+        }
+        return b.rating - a.rating
+      } else {
+        if (sortTimeAscending.value) {
+          return a.playTime - b.playTime
+        }
+        return b.playTime - a.playTime
       }
-      return b.playTime - a.playTime
     })
   })
 
-  return { filteredGames }
+  return { filteredGames, filterType }
 }
