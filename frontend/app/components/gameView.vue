@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { gamesFilter } from '~/composables/gamesFilter.ts'
+import { useGamesFilter } from '~/composables/gamesFilter.ts'
 
-const { filteredGames } = gamesFilter()
+const { filteredGames } = useGamesFilter()
 </script>
 
 <template>
