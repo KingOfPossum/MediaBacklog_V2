@@ -15,5 +15,8 @@ const { filteredGames } = useGamesFilter()
         <GameCard :game="game" />
       </div>
     </div>
+    <div class="absolute top-185 right-15">
+      <AddGameButton />
+    </div>
   </UContainer>
 </template>
