@@ -7,8 +7,20 @@ definePageMeta({
   layout: 'main-layout'
 })
 
-await loadGames()
-console.log('GAMES: ', games.value)
+const repeatLoadingGames = () => {
+  onMounted(async () => {
+    console.log('Trying to load games...')
+    await loadGames()
+
+    setInterval(async () => {
+      console.log('Trying to load games...')
+      await loadGames()
+      console.log('GAMES: ', games.value)
+    }, 30000)
+  })
+}
+
+repeatLoadingGames()
 </script>
 
 <template>

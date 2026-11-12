@@ -5,7 +5,13 @@ export const useGames = () => {
   const games = useState('games', () => { return [] })
 
   const loadGames = async () => {
-    const gamesResponse = await makeHTTPGETRequest('getLibrary')
+    let requestSuccessful = true
+    const gamesResponse = await makeHTTPGETRequest('getLibrary').catch(() => requestSuccessful = false)
+
+    if (!requestSuccessful) {
+      return
+    }
+
     const newGames: Game[] = []
 
     for (const game of gamesResponse) {

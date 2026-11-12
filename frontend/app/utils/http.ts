@@ -4,6 +4,7 @@ export async function makeHTTPGETRequest(url: string) {
   const response = await fetch(baseUrl + url)
 
   if (!response.ok) {
+    console.error(response.statusText)
     throw new Error(`HTTP-Error: ${response.status}`)
   }
 
