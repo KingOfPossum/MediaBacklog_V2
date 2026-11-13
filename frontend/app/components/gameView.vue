@@ -16,7 +16,7 @@ const { filteredGames } = useGamesFilter()
       </div>
     </div>
     <div class="absolute top-185 right-15">
-      <AddGameButton />
+      <AddGameModal />
     </div>
   </UContainer>
 </template>
