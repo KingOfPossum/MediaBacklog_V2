@@ -4,16 +4,31 @@ import { getStatusNames } from '~/types/playStatus.ts'
 
 const { consoles } = useConsoleFilter()
 
+const toast = useToast()
+
 const nameValue = ref('')
 const platformValue = ref('')
 const statusValue = ref('')
 
 const open = ref(false)
 
+const resetFields = () => {
+  nameValue.value = ''
+  platformValue.value = ''
+  statusValue.value = ''
+}
+
 const onSubmit = async () => {
   console.log('Submitting...')
   if (nameValue.value === '' || platformValue.value === '' || statusValue.value === '') {
     console.log('Need to fill in all required fields')
+    toast.add({
+      title: 'Error',
+      description: 'Need to fill in all required fields',
+      icon: 'bx:error',
+      color: 'red',
+      duration: 3000
+    })
   } else {
     const data = {
       game: nameValue.value,
@@ -22,11 +37,8 @@ const onSubmit = async () => {
     }
     const response = await makeHTTPPOSTRequest('game', data)
     console.log(response)
-  }
-
-  setTimeout(() => {
     open.value = false
-  }, 3000)
+  }
 }
 </script>
 
@@ -45,6 +57,7 @@ const onSubmit = async () => {
       label="+"
       class="hover:cursor-pointer size-20"
       :ui="{ label: 'ml-6 text-lg' }"
+      @click="resetFields"
     />
 
     <template #body>
