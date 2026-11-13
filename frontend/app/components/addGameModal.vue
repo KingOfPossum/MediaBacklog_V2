@@ -4,13 +4,26 @@ import { getStatusNames } from '~/types/playStatus.ts'
 
 const { consoles } = useConsoleFilter()
 
+const nameValue = ref('')
 const platformValue = ref('')
 const statusValue = ref('')
 
 const open = ref(false)
 
-const onSubmit = () => {
+const onSubmit = async () => {
   console.log('Submitting...')
+  if (nameValue.value === '' || platformValue.value === '' || statusValue.value === '') {
+    console.log('Need to fill in all required fields')
+  } else {
+    const data = {
+      game: nameValue.value,
+      platform: platformValue.value,
+      status: statusValue.value
+    }
+    const response = await makeHTTPPOSTRequest('game', data)
+    console.log(response)
+  }
+
   setTimeout(() => {
     open.value = false
   }, 3000)
@@ -45,6 +58,7 @@ const onSubmit = () => {
               required
             >
               <UInput
+                v-model="nameValue"
                 class="w-50"
                 placeholder="Enter name"
               />
@@ -96,7 +110,7 @@ const onSubmit = () => {
               src="/images/placeholder.jpg"
               width="50%"
               class="rounded-lg object-cover h-full w-auto"
-            />
+            >
           </div>
         </div>
       </UForm>

@@ -1,7 +1,17 @@
 <script setup lang="ts">
 import { useGamesFilter } from '~/composables/gamesFilter.ts'
+import { useGames } from '~/data/games.ts'
 
 const { filteredGames } = useGamesFilter()
+const { loadGames } = useGames()
+
+onMounted(async () => {
+  await loadGames()
+
+  setInterval(async () => {
+    await loadGames()
+  }, 10000)
+})
 </script>
 
 <template>

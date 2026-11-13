@@ -23,7 +23,7 @@ export async function makeHTTPPOSTRequest(url: string, data: object) {
       body: JSON.stringify(data)
     })
 
-    await response.json()
+    return await response.json()
   } catch (error) {
     console.error('Error during POST request: ', error)
     return { error: 'Server Error' }
