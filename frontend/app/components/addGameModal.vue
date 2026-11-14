@@ -9,6 +9,7 @@ const toast = useToast()
 const nameValue = ref('')
 const platformValue = ref('')
 const statusValue = ref('')
+const gameRating = ref(1)
 
 const open = ref(false)
 
@@ -34,7 +35,7 @@ const onSubmit = async () => {
       game: nameValue.value,
       platform: platformValue.value,
       status: statusValue.value,
-      rating: 20
+      rating: gameRating.value
     }
     const response = await makeHTTPPOSTRequest('game', data)
     console.log(response)
@@ -104,7 +105,7 @@ const onSubmit = async () => {
 
             <UFormField label="Rating">
               <RatingDisplay
-                :rating="20"
+                v-model:rating="gameRating"
                 :selectable="true"
               />
             </UFormField>
