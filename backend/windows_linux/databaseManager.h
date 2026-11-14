@@ -40,6 +40,7 @@ typedef struct APILibraryGameEntry {
   int num_consoles;
   char *status;
   int rating;
+  char *add_date;
 } APILibraryGameEntry;
 
 typedef struct APILibrary {
@@ -69,12 +70,12 @@ int igdb_games_genre_exists(sqlite3 *connection, int igdb_id, int genre_id);
 void igdb_games_genre_add(sqlite3 *connection, int igdb_id, int genre_id);
 
 int game_exists_in_library(sqlite3 *connection, int user_id, int game_id);
-int library_add_game(sqlite3 *connection, int user_id, int game_id, char *status, int rating);
+int library_add_game(sqlite3 *connection, int user_id, int game_id, char *status, int rating, char *date);
 
 int library_console_entry_exists(sqlite3 *connection, int library_id, char *platform);
 void add_library_console_entry(sqlite3 *connection, int library_id, char *platform);
 
-APILibraryGameEntry add_game_to_library(char *name, char *platform, char *status, int rating, IGDBEntry game);
+APILibraryGameEntry add_game_to_library(char *name, char *platform, char *status, int rating, char *date, IGDBEntry game);
 
 APIGameEntry get_game(sqlite3 *connection, int game_id, char *name);
 APIIGDBEntry get_igdb_infos(sqlite3 *connection, int igdb_id);

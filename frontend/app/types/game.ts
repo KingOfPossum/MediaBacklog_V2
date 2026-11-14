@@ -8,4 +8,5 @@ export type Game = {
   playTime: number
   consoles: string[]
   rating: number
+  date: string
 }

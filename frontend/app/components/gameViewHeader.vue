@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { TimeFilterPopover, RatingFilterPopover } from '#components'
+import DateSortButton from "~/components/dateSortButton.vue";
 </script>
 
 <template>
@@ -16,6 +17,7 @@ import { TimeFilterPopover, RatingFilterPopover } from '#components'
     </div>
     <div class="mb-5 flex flex-row gap-5">
       <span class="pt-1">Sort: </span>
+      <DateSortButton />
       <RatingSortButton />
       <TimeSortButton />
     </div>

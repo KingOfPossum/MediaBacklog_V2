@@ -22,7 +22,8 @@ export const useGames = () => {
         status: convertToPlayStatus(game['status']),
         playTime: game['game_infos']['main_story_length'] > 0 ? Math.trunc(game['game_infos']['main_story_length'] / 3600) : -1,
         consoles: game['consoles'],
-        rating: game['rating']
+        rating: game['rating'],
+        date: game['add_date']
       }
       newGames.push(newGame)
     }

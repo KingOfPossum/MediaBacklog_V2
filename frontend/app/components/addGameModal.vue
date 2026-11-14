@@ -31,11 +31,17 @@ const onSubmit = async () => {
       duration: 3000
     })
   } else {
+    const date = new Date()
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    const currentDate = year + '-' + month + '-' + day
     const data = {
       game: nameValue.value,
       platform: platformValue.value,
       status: statusValue.value,
-      rating: gameRating.value
+      rating: gameRating.value,
+      date: currentDate
     }
     const response = await makeHTTPPOSTRequest('game', data)
     console.log(response)
