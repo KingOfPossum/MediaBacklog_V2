@@ -30,13 +30,14 @@ char *get_new_game(char *json) {
   char game_name[128];
   char platform[128];
   char status[128];
-  sscanf(json,"{\"game\":\"%[^\"]\",\"platform\":\"%[^\"]\",\"status\":\"%[^\"]\"}",game_name,platform,status);
+  int rating;
+  sscanf(json,"{\"game\":\"%[^\"]\",\"platform\":\"%[^\"]\",\"status\":\"%[^\"]\",\"rating\":%d}",game_name,platform,status,&rating);
   
-  printf("Searching for game: %s (%s) ...\n",game_name,platform);
+  printf("Searching for game: %s (%s) (Rating: %d)...\n",game_name,platform,rating);
   
   IGDBEntry new_game = getGame(game_name,platform);
  
-  APILibraryGameEntry library_game = add_game_to_library(game_name,platform,status,new_game);
+  APILibraryGameEntry library_game = add_game_to_library(game_name, platform, status, rating, new_game);
   print_APILibraryGameEntry(library_game);  
   
   char *returned_json = APILibraryGameEntry_to_json(library_game);

@@ -33,7 +33,8 @@ const onSubmit = async () => {
     const data = {
       game: nameValue.value,
       platform: platformValue.value,
-      status: statusValue.value
+      status: statusValue.value,
+      rating: 20
     }
     const response = await makeHTTPPOSTRequest('game', data)
     console.log(response)

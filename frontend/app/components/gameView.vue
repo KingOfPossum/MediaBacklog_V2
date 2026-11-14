@@ -25,7 +25,7 @@ onMounted(async () => {
         <GameCard :game="game" />
       </div>
     </div>
-    <div class="absolute top-185 right-15">
+    <div class="absolute bottom-15 right-85">
       <AddGameModal />
     </div>
   </UContainer>
