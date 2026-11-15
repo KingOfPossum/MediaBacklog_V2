@@ -21,7 +21,9 @@ static void bind_requests() {
   bind_get_request("/getGame", get_game_func);
   bind_get_request("/getLibrary", get_library_func);
   bind_get_request("/clearDatabase", clear_database_func);
-  bind_post_request("/game",get_new_game);
+  bind_get_request("/IGDBGame", get_igdb_game_func);
+
+  bind_post_request("/newGame",get_new_game);
 }
 
 char *get_new_game(char *json) {
@@ -82,4 +84,16 @@ char *clear_database_func(char *request) {
   clear_database();
 
   return strdup("{\"msg\": \"Database cleared\"}");
+}
+
+char *get_igdb_game_func(char *request) {
+  char *game_name = get_query_param(request, "name");
+
+  IGDBEntry igdb_game = getGame(game_name, NULL);
+  
+  char *json = IGDBEntry_to_json(igdb_game);
+
+  free_entry(&igdb_game);
+
+  return json;
 }

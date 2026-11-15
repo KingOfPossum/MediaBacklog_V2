@@ -9,6 +9,7 @@ char *get_new_game(char *json);
 char *get_game_func(char *request);
 char *get_library_func(char *request);
 char *clear_database_func(char *request);
+char *get_igdb_game_func(char *request);
 
 void server();
 

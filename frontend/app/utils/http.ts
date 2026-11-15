@@ -1,7 +1,24 @@
 const baseUrl = 'http://localhost:1234/'
 
-export async function makeHTTPGETRequest(url: string) {
-  const response = await fetch(baseUrl + url)
+export async function makeHTTPGETRequest(url: string, params?: Record<string, any>) {
+  let finalUrl = baseUrl + url
+
+  if (params) {
+    const searchParams = new URLSearchParams()
+
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        searchParams.append(key, String(value))
+      }
+    })
+
+    const queryString = searchParams.toString()
+    if (queryString) {
+      finalUrl += (finalUrl.includes('?') ? '&' : '?') + queryString
+    }
+  }
+
+  const response = await fetch(finalUrl)
 
   if (!response.ok) {
     console.error(response.statusText)

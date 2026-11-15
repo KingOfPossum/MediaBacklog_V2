@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { useConsoleFilter } from '~/composables/consoleFilter.ts'
 import { getStatusNames } from '~/types/playStatus.ts'
+import { useGamesFilter } from '~/composables/gamesFilter.ts'
+import { useDateSort } from '~/composables/dateSort.ts'
 
 const { consoles } = useConsoleFilter()
+const { filterType } = useGamesFilter()
+const { sortDateAscending } = useDateSort()
 
 const toast = useToast()
 
@@ -11,12 +15,17 @@ const platformValue = ref('')
 const statusValue = ref('')
 const gameRating = ref(1)
 
+const image = ref('/images/placeholder.jpg')
+
+let timeoutID = -1
+
 const open = ref(false)
 
 const resetFields = () => {
   nameValue.value = ''
   platformValue.value = ''
   statusValue.value = ''
+  gameRating.value = 1
 }
 
 const onSubmit = async () => {
@@ -43,10 +52,30 @@ const onSubmit = async () => {
       rating: gameRating.value,
       date: currentDate
     }
-    const response = await makeHTTPPOSTRequest('game', data)
-    console.log(response)
+    await makeHTTPPOSTRequest('newGame', data)
     open.value = false
+    filterType.value = 'date'
+    sortDateAscending.value = false
   }
+}
+
+const checkForEndOfInput = () => {
+  console.log('KeyDown')
+  if (timeoutID !== -1) {
+    clearTimeout(timeoutID)
+  }
+  timeoutID = setTimeout(async () => {
+    console.log('Input finished')
+    const response = await makeHTTPGETRequest('IGDBGame', { name: nameValue.value })
+
+    if (response['igdb_id'] !== -1 && nameValue.value !== '' && response['cover_url'] != '(null)') {
+      image.value = response['cover_url']
+    } else {
+      image.value = '/images/placeholder.jpg'
+    }
+
+    console.log(response)
+  }, 500)
 }
 </script>
 
@@ -82,6 +111,7 @@ const onSubmit = async () => {
                 v-model="nameValue"
                 class="w-50"
                 placeholder="Enter name"
+                @keydown="checkForEndOfInput"
               />
             </UFormField>
 
@@ -128,7 +158,8 @@ const onSubmit = async () => {
 
           <div class="pl-5 pr-5 pt-2 pb-2">
             <img
-              src="/images/placeholder.jpg"
+              id="addGameImage"
+              :src="image"
               width="50%"
               class="rounded-lg object-cover h-full w-auto"
             >
