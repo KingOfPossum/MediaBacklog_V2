@@ -27,7 +27,7 @@ export const useGamesFilter = () => {
       const consoleFilter = item.consoles.some(console => activatedConsoles.value.includes(console))
       const statusFilter = activatedStatus.value.includes(PlayStatus[item.status])
       const timeFilter = (item.playTime === -1) || (item.playTime > timeRange.value[0] && ((item.playTime < timeRange.value[1]) || (timeRange.value[1] >= 50)))
-      const ratingFilter = item.rating >= minRating.value && item.rating <= maxRating.value
+      const ratingFilter = (item.rating >= minRating.value && item.rating <= maxRating.value) || (item.rating <= 0)
 
       return searchFilter && consoleFilter && statusFilter && timeFilter && ratingFilter
     }).sort((a: Game, b: Game) => {

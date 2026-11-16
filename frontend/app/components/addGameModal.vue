@@ -48,7 +48,7 @@ const onSubmit = async () => {
       game: nameValue.value,
       platform: platformValue.value,
       status: statusValue.value,
-      rating: gameRating.value,
+      rating: statusValue.value === PlayStatus[PlayStatus.Completed] ? gameRating.value : -1,
       date: currentDate
     }
     await makeHTTPPOSTRequest('newGame', data)
@@ -156,15 +156,17 @@ const checkForEndOfInput = () => {
               />
             </UFormField>
 
-            <UFormField
-              v-if="statusValue === 'Completed'"
-              label="Rating"
-            >
-              <RatingDisplay
-                v-model:rating="gameRating"
-                :selectable="true"
-              />
-            </UFormField>
+            <div class="h-8">
+              <UFormField
+                v-if="statusValue === 'Completed'"
+                label="Rating"
+              >
+                <RatingDisplay
+                  v-model:rating="gameRating"
+                  :selectable="true"
+                />
+              </UFormField>
+            </div>
 
             <div class="absolute top-75 right-7">
               <UButton

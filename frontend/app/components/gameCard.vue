@@ -24,6 +24,7 @@ defineProps<{ game: Game }>()
         >
         <div class="ml-3  ">
           <RatingDisplay
+            v-if="game.rating > 0"
             :rating="game.rating"
             :selectable="false"
           />
