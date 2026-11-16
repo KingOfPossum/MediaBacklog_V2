@@ -14,8 +14,7 @@ const nameValue = ref('')
 const platformValue = ref('')
 const statusValue = ref('')
 const gameRating = ref(1)
-
-const image = ref('/images/placeholder.jpg')
+const previewImage = ref('/images/placeholder.jpg')
 
 let timeoutID = -1
 
@@ -26,10 +25,10 @@ const resetFields = () => {
   platformValue.value = ''
   statusValue.value = ''
   gameRating.value = 1
+  previewImage.value = '/images/placeholder.jpg'
 }
 
 const onSubmit = async () => {
-  console.log('Submitting...')
   if (nameValue.value === '' || platformValue.value === '' || statusValue.value === '') {
     console.log('Need to fill in all required fields')
     toast.add({
@@ -59,22 +58,35 @@ const onSubmit = async () => {
   }
 }
 
+const fetchPreview = async () => {
+  let params
+
+  if (platformValue.value !== '') {
+    params = {
+      name: nameValue.value,
+      platform: platformValue.value
+    }
+  } else {
+    params = {
+      name: nameValue.value
+    }
+  }
+
+  const response = await makeHTTPGETRequest('IGDBGame', params)
+
+  if (response['igdb_id'] !== -1 && nameValue.value !== '' && response['cover_url'] != '(null)') {
+    previewImage.value = response['cover_url']
+  } else {
+    previewImage.value = '/images/placeholder.jpg'
+  }
+}
+
 const checkForEndOfInput = () => {
-  console.log('KeyDown')
   if (timeoutID !== -1) {
     clearTimeout(timeoutID)
   }
   timeoutID = setTimeout(async () => {
-    console.log('Input finished')
-    const response = await makeHTTPGETRequest('IGDBGame', { name: nameValue.value })
-
-    if (response['igdb_id'] !== -1 && nameValue.value !== '' && response['cover_url'] != '(null)') {
-      image.value = response['cover_url']
-    } else {
-      image.value = '/images/placeholder.jpg'
-    }
-
-    console.log(response)
+    await fetchPreview()
   }, 500)
 }
 </script>
@@ -124,6 +136,11 @@ const checkForEndOfInput = () => {
                 :items="consoles"
                 placeholder="Select Platform"
                 class="w-50"
+                @change="() => {
+                  if (nameValue !== '') {
+                    fetchPreview()
+                  }
+                }"
               />
             </UFormField>
 
@@ -139,7 +156,10 @@ const checkForEndOfInput = () => {
               />
             </UFormField>
 
-            <UFormField label="Rating">
+            <UFormField
+              v-if="statusValue === 'Completed'"
+              label="Rating"
+            >
               <RatingDisplay
                 v-model:rating="gameRating"
                 :selectable="true"
@@ -159,7 +179,7 @@ const checkForEndOfInput = () => {
           <div class="pl-5 pr-5 pt-2 pb-2">
             <img
               id="addGameImage"
-              :src="image"
+              :src="previewImage"
               width="50%"
               class="rounded-lg object-cover h-full w-auto"
             >

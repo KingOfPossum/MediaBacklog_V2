@@ -88,8 +88,9 @@ char *clear_database_func(char *request) {
 
 char *get_igdb_game_func(char *request) {
   char *game_name = get_query_param(request, "name");
+  char *platform = get_query_param(request,"platform");
 
-  IGDBEntry igdb_game = getGame(game_name, NULL);
+  IGDBEntry igdb_game = getGame(game_name, platform);
   
   char *json = IGDBEntry_to_json(igdb_game);
 
