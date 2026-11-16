@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "cJSON.h"
+#include "utils.h"
 
 #if defined(ESP32) || defined(ESP_PLATFORM)
   #include "esp32_http.h"
@@ -338,7 +339,7 @@ char *IGDBEntry_to_json(IGDBEntry entry) {
     entry.game_name,
     entry.url,
     entry.cover_url,
-    entry.summary,
+    clean_json(entry.summary),
     platforms,
     genres
   );

@@ -1,7 +1,8 @@
 #include <string.h>
-#include "databaseManager.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "databaseManager.h"
+#include "utils.h"
 
 database_table games_table = {
   "games",
@@ -663,41 +664,6 @@ void print_APILibraryGameEntry(APILibraryGameEntry library_game) {
   printf("  RATING: %d\n", library_game.rating);
   printf("  ADD DATE: %s\n", library_game.add_date ? library_game.add_date : "N/A");
   printf("#############################\n\n");
-}
-
-char *clean_json(char *input) {
-  if(input == NULL) {
-    return strdup("");
-  }
-
-  int len = strlen(input);
-  char *clean_str = calloc(len * 2 + 1, sizeof(char));
-  int j = 0;
-
-  for(int i = 0;i < len;i++) {
-    if(input[i] == '\n') {
-      clean_str[j++] = '\\';
-      clean_str[j++] = 'n';
-    }
-    else if(input[i] == '"') {
-      clean_str[j++] = '\\';
-      clean_str[j++] = '"';
-    }
-    else if(input[i] == '\r') {
-      clean_str[j++] = '\\';
-      clean_str[j++] = 'r';
-    }
-    else if(input[i] == '\t') {
-      clean_str[j++] = '\\';
-      clean_str[j++] = 't';
-    }
-    else {
-      clean_str[j++] = input[i];
-    }
-  }
-  clean_str[j] = '\0';
-
-  return clean_str;
 }
 
 char *APIGameEntry_to_json(APIGameEntry game) {
