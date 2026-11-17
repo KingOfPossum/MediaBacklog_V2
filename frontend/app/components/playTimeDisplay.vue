@@ -4,7 +4,8 @@ defineProps<{ time: number }>()
 
 <template>
   <UBadge
-    :label="`${time} hours`"
+    :label="time > 0 ? `${time} hours` : 'No information'"
+    :color="time > 0 ? 'primary' : 'error'"
     variant="subtle"
     icon="akar-icons:clock"
     class="rounded-xl font-bold"

@@ -31,6 +31,7 @@ void print_entry(IGDBEntry entry);
 void init_wrapper();
 void exit_wrapper();
 
+char *IGDBEntry_to_json(IGDBEntry entry);
 #ifdef __cplusplus
 }
 #endif

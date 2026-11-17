@@ -1,7 +1,8 @@
 #include <string.h>
-#include "databaseManager.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "databaseManager.h"
+#include "utils.h"
 
 database_table games_table = {
   "games",
@@ -17,8 +18,8 @@ database_table games_backlog_table = {
 
 database_table games_library_table = {
   "games_library",
-  (char *[]){"id INTEGER PRIMARY KEY","user_id INTEGER NOT NULL","game_id INTEGER NOT NULL","status TEXT NOT NULL","FOREIGN KEY (game_id) REFERENCES games(id)"},
-  5
+  (char *[]){"id INTEGER PRIMARY KEY","user_id INTEGER NOT NULL","game_id INTEGER NOT NULL","status TEXT NOT NULL", "rating INTEGER NOT NULL", "add_date DATE NOT NULL", "FOREIGN KEY (game_id) REFERENCES games(id)"},
+  7
 };
 
 database_table games_library_console_table = {
@@ -325,14 +326,16 @@ int game_exists_in_library(sqlite3 *connection, int user_id, int game_id) {
   return id;
 }
 
-int library_add_game(sqlite3 *connection, int user_id, int game_id, char *status) {
+int library_add_game(sqlite3 *connection, int user_id, int game_id, char *status, int rating, char *date) {
   char user_id_str[16];
   char game_id_str[16];
+  char rating_str[16];
 
   snprintf(user_id_str, sizeof(user_id_str), "%d", user_id);
   snprintf(game_id_str, sizeof(game_id_str), "%d", game_id);
+  snprintf(rating_str, sizeof(rating_str), "%d", rating);
 
-  insert_sql(connection, games_library_table, (char *[]){"user_id","game_id","status"},3, (char *[]){user_id_str, game_id_str, status},3);
+  insert_sql(connection, games_library_table, (char *[]){"user_id","game_id","status","rating","add_date"}, 5, (char *[]){user_id_str, game_id_str, status, rating_str, date},5);
 
   return game_exists_in_library(connection, user_id,game_id);
 }
@@ -499,12 +502,14 @@ APILibraryGameEntry get_game_from_library_by_id(sqlite3 *connection, int game_id
   char library_id_str[16];
   snprintf(library_id_str, sizeof(library_id_str), "%d", library_id);
 
-  select_result *result = select_sql(connection, games_library_table, (char *[]){"user_id","status"}, 2, "id=?", (char *[]){library_id_str}, 1);
+  select_result *result = select_sql(connection, games_library_table, (char *[]){"user_id","status","rating","add_date"}, 4, "id=?", (char *[]){library_id_str}, 1);
 
   if(result != NULL) {
     if(result->num_results > 0){
       entry.user_id = result->all_results[0].data[0] ? atoi(result->all_results[0].data[0]) : -1;
-      entry.status = result->all_results[0].data[1] ? strdup(result->all_results[0].data[1]) : NULL;   
+      entry.status = result->all_results[0].data[1] ? strdup(result->all_results[0].data[1]) : NULL; 
+      entry.rating = result->all_results[0].data[2] ? atoi(result->all_results[0].data[2]) : 1;  
+      entry.add_date = result->all_results[0].data[3] ? strdup(result->all_results[0].data[3]) : NULL;
     }
     free_select_results(result);
   }
@@ -567,7 +572,7 @@ APILibrary get_library() {
   return library;
 }
 
-APILibraryGameEntry add_game_to_library(char *name, char *platform, char *status, IGDBEntry game) {
+APILibraryGameEntry add_game_to_library(char *name, char *platform, char *status, int rating, char *date, IGDBEntry game) {
   sqlite3 *connection = open_connection(db.file_name);
   
   char *game_name = game.igdb_id == -1 ? name : game.game_name;
@@ -583,7 +588,7 @@ APILibraryGameEntry add_game_to_library(char *name, char *platform, char *status
   int library_id = game_exists_in_library(connection, -1, game_id);
   if(library_id == -1){
     printf("=> Game not in library!\nNow adding to library...\n");
-    library_id = library_add_game(connection, -1, game_id, status);
+    library_id = library_add_game(connection, -1, game_id, status, rating, date);
   }
   else {
     printf("=> Game is already in library!\n");
@@ -656,42 +661,9 @@ void print_APILibraryGameEntry(APILibraryGameEntry library_game) {
     printf("    -%s\n",library_game.consoles[i] ? library_game.consoles[i] : "N/A");
   }
   printf("  STATUS: %s\n", library_game.status ? library_game.status : "N/A");
+  printf("  RATING: %d\n", library_game.rating);
+  printf("  ADD DATE: %s\n", library_game.add_date ? library_game.add_date : "N/A");
   printf("#############################\n\n");
-}
-
-char *clean_json(char *input) {
-  if(input == NULL) {
-    return strdup("");
-  }
-
-  int len = strlen(input);
-  char *clean_str = calloc(len * 2 + 1, sizeof(char));
-  int j = 0;
-
-  for(int i = 0;i < len;i++) {
-    if(input[i] == '\n') {
-      clean_str[j++] = '\\';
-      clean_str[j++] = 'n';
-    }
-    else if(input[i] == '"') {
-      clean_str[j++] = '\\';
-      clean_str[j++] = '"';
-    }
-    else if(input[i] == '\r') {
-      clean_str[j++] = '\\';
-      clean_str[j++] = 'r';
-    }
-    else if(input[i] == '\t') {
-      clean_str[j++] = '\\';
-      clean_str[j++] = 't';
-    }
-    else {
-      clean_str[j++] = input[i];
-    }
-  }
-  clean_str[j] = '\0';
-
-  return clean_str;
 }
 
 char *APIGameEntry_to_json(APIGameEntry game) {
@@ -819,14 +791,18 @@ char *APILibraryGameEntry_to_json(APILibraryGameEntry library_entry) {
       "\"library_id\":%d,"
       "\"user_id\":%d,"
       "\"consoles\":[%s],"
-      "\"status\":\"%s\""
+      "\"status\":\"%s\","
+      "\"rating\":%d,"
+      "\"add_date\":\"%s\""
     "}",
     game_infos_json,
     igdb_infos_json,
     library_entry.library_id,
     library_entry.user_id,
     consoles,
-    library_entry.status ? library_entry.status : ""
+    library_entry.status ? library_entry.status : "",
+    library_entry.rating,
+    library_entry.add_date ? library_entry.add_date : ""
   );
 
   free(consoles);

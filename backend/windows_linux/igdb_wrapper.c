@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "cJSON.h"
+#include "utils.h"
 
 #if defined(ESP32) || defined(ESP_PLATFORM)
   #include "esp32_http.h"
@@ -285,4 +286,66 @@ void print_entry(IGDBEntry entry) {
   printf("  Normally: %d\n",entry.times.normally);
   printf("  Completely: %d\n",entry.times.completely);
   printf("\n");
+}
+
+char *IGDBEntry_to_json(IGDBEntry entry) {
+  char *json = calloc(2048, sizeof(char));
+  char *platforms = calloc(2048, sizeof(char));
+  char *genres = calloc(2048, sizeof(char));
+
+  if(!json) {
+    printf("Couldn't allocate memory for json\n");
+  }
+  if(!platforms) {
+    printf("Couldn't allocate memory for platforms\n");
+  }
+  if(!genres) {
+    printf("Couldn't allocate memory for genres\n");
+  }
+
+  if(entry.num_platforms > 0 ) {
+    for(int i = 0;i < entry.num_platforms-1;i++){
+      strcat(platforms, "\"");
+      strcat(platforms, entry.platforms[i] ? entry.platforms[i] : "");
+      strcat(platforms, "\",");
+    }
+    strcat(platforms, "\"");
+    strcat(platforms, entry.platforms[entry.num_platforms-1] ? entry.platforms[entry.num_platforms-1] : "");
+    strcat(platforms, "\"");
+  }
+
+  if(entry.num_genres > 0 ) {
+    for(int i = 0;i < entry.num_genres-1;i++){
+      strcat(genres, "\"");
+      strcat(genres, entry.genres[i] ? entry.genres[i] : "");
+      strcat(genres, "\",");
+    }
+    strcat(genres, "\"");
+    strcat(genres, entry.genres[entry.num_genres-1] ? entry.genres[entry.num_genres-1] : "");
+    strcat(genres, "\"");
+  }
+
+  snprintf(json, 2048, 
+    "{"
+    "\"igdb_id\":%d,"
+    "\"name\":\"%s\","
+    "\"url\":\"%s\","
+    "\"cover_url\":\"%s\","
+    "\"summary\":\"%s\","
+    "\"platforms\":[%s],"
+    "\"genres\":[%s]"
+    "}",
+    entry.igdb_id,
+    entry.game_name,
+    entry.url,
+    entry.cover_url,
+    clean_json(entry.summary),
+    platforms,
+    genres
+  );
+
+  free(platforms);
+  free(genres);
+
+  return json;
 }

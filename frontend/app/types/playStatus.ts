@@ -5,6 +5,14 @@ export enum PlayStatus {
   Aborted = 3
 }
 
+export const getStatusNames = () => {
+  return Object.values(PlayStatus).filter(
+    (item) => { return typeof item === 'number' }
+  ).map(
+    (item) => { return PlayStatus[item] }
+  )
+}
+
 export const convertToPlayStatus = (txt: string) => {
   if (txt === 'Not Played') {
     return PlayStatus.NotPlayed

@@ -1,9 +1,27 @@
 const baseUrl = 'http://localhost:1234/'
 
-export async function makeHTTPGETRequest(url: string) {
-  const response = await fetch(baseUrl + url)
+export async function makeHTTPGETRequest(url: string, params?: Record<string, any>) {
+  let finalUrl = baseUrl + url
+
+  if (params) {
+    const searchParams = new URLSearchParams()
+
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        searchParams.append(key, String(value))
+      }
+    })
+
+    const queryString = searchParams.toString()
+    if (queryString) {
+      finalUrl += (finalUrl.includes('?') ? '&' : '?') + queryString
+    }
+  }
+
+  const response = await fetch(finalUrl)
 
   if (!response.ok) {
+    console.error(response.statusText)
     throw new Error(`HTTP-Error: ${response.status}`)
   }
 
@@ -22,7 +40,7 @@ export async function makeHTTPPOSTRequest(url: string, data: object) {
       body: JSON.stringify(data)
     })
 
-    await response.json()
+    return await response.json()
   } catch (error) {
     console.error('Error during POST request: ', error)
     return { error: 'Server Error' }

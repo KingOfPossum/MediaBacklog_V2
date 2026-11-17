@@ -27,7 +27,7 @@ void start_server(int port);
 void bind_get_request(char *request, char *(*func)(char *));
 void bind_post_request(char *request, char *(*func)(char *));
 
-void decode_url(char *url);
+char *decode_url(char *url);
 char *get_query_param(const char *buffer, const char *key);
 
 #ifdef __cplusplus

@@ -21,7 +21,9 @@ static void bind_requests() {
   bind_get_request("/getGame", get_game_func);
   bind_get_request("/getLibrary", get_library_func);
   bind_get_request("/clearDatabase", clear_database_func);
-  bind_post_request("/game",get_new_game);
+  bind_get_request("/IGDBGame", get_igdb_game_func);
+
+  bind_post_request("/newGame",get_new_game);
 }
 
 char *get_new_game(char *json) {
@@ -30,13 +32,16 @@ char *get_new_game(char *json) {
   char game_name[128];
   char platform[128];
   char status[128];
-  sscanf(json,"{\"game\":\"%[^\"]\",\"platform\":\"%[^\"]\",\"status\":\"%[^\"]\"}",game_name,platform,status);
+  int rating;
+  char date[128];
+
+  sscanf(json,"{\"game\":\"%[^\"]\",\"platform\":\"%[^\"]\",\"status\":\"%[^\"]\",\"rating\":%d,\"date\":\"%[^\"]\"}",game_name,platform,status,&rating,date);
   
-  printf("Searching for game: %s (%s) ...\n",game_name,platform);
+  printf("Searching for game: %s (%s) (Added on %s)...\n",game_name,platform,date);
   
   IGDBEntry new_game = getGame(game_name,platform);
  
-  APILibraryGameEntry library_game = add_game_to_library(game_name,platform,status,new_game);
+  APILibraryGameEntry library_game = add_game_to_library(game_name, platform, status, rating, date, new_game);
   print_APILibraryGameEntry(library_game);  
   
   char *returned_json = APILibraryGameEntry_to_json(library_game);
@@ -79,4 +84,17 @@ char *clear_database_func(char *request) {
   clear_database();
 
   return strdup("{\"msg\": \"Database cleared\"}");
+}
+
+char *get_igdb_game_func(char *request) {
+  char *game_name = get_query_param(request, "name");
+  char *platform = get_query_param(request,"platform");
+
+  IGDBEntry igdb_game = getGame(game_name, platform);
+  
+  char *json = IGDBEntry_to_json(igdb_game);
+
+  free_entry(&igdb_game);
+
+  return json;
 }

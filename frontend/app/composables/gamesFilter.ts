@@ -6,6 +6,7 @@ import { useTimeFilter } from '~/composables/timeFilter.ts'
 import { useTimeSort } from '~/composables/timeSort.ts'
 import { useRatingFilter } from '~/composables/ratingFilter.ts'
 import { useRatingSort } from '~/composables/ratingSort.ts'
+import { useDateSort } from '~/composables/dateSort.ts'
 
 export const useGamesFilter = () => {
   const { searchQuery } = searchBar()
@@ -15,6 +16,7 @@ export const useGamesFilter = () => {
   const { sortTimeAscending } = useTimeSort()
   const { minRating, maxRating } = useRatingFilter()
   const { sortRatingAscending } = useRatingSort()
+  const { sortDateAscending } = useDateSort()
   const { games } = useGames()
 
   const filterType = useState('filterType', () => { return 'rating' })
@@ -24,8 +26,8 @@ export const useGamesFilter = () => {
       const searchFilter = (searchQuery.value.length > 0 && item.name.toLowerCase().includes(searchQuery.value.toLowerCase())) || searchQuery.value.length === 0
       const consoleFilter = item.consoles.some(console => activatedConsoles.value.includes(console))
       const statusFilter = activatedStatus.value.includes(PlayStatus[item.status])
-      const timeFilter = item.playTime > timeRange.value[0] && ((item.playTime < timeRange.value[1]) || (timeRange.value[1] >= 50))
-      const ratingFilter = item.rating >= minRating.value && item.rating <= maxRating.value
+      const timeFilter = (item.playTime === -1) || (item.playTime > timeRange.value[0] && ((item.playTime < timeRange.value[1]) || (timeRange.value[1] >= 50)))
+      const ratingFilter = (item.rating >= minRating.value && item.rating <= maxRating.value) || (item.rating <= 0)
 
       return searchFilter && consoleFilter && statusFilter && timeFilter && ratingFilter
     }).sort((a: Game, b: Game) => {
@@ -34,11 +36,16 @@ export const useGamesFilter = () => {
           return a.rating - b.rating
         }
         return b.rating - a.rating
-      } else {
+      } else if (filterType.value === 'time') {
         if (sortTimeAscending.value) {
           return a.playTime - b.playTime
         }
         return b.playTime - a.playTime
+      } else {
+        if (sortDateAscending.value) {
+          return new Date(a.date).getTime() - new Date(b.date).getTime()
+        }
+        return new Date(b.date).getTime() - new Date(a.date).getTime()
       }
     })
   })
