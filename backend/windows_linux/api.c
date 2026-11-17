@@ -303,12 +303,66 @@ static void handle_cors_preflight(socketType client_socket) {
   printf("Responded to CORS Preflight!\n\n");
 }
 
-void decode_url(char *url) {
-  for(int i = 0; url[i] != '\0';i++){
+char *decode_url(char *url) {
+  int len = strlen(url);
+  int j = 0;
+
+  char *decoded_url = calloc(len * 2 + 1, sizeof(char));
+
+  for(int i = 0; i < len;i++){
     if(url[i] == '+'){
-      url[i] = ' ';
+      decoded_url[j++] = ' ';
+    }
+    else if(i < len - 2 && url[i] == '%' && url[i+1] == '3' && url[i+2] == 'A') {
+      decoded_url[j++] = ':';
+      i += 2;
+    }
+    else if(i < len - 2 && url[i] == '%' && url[i+1] == '2' && url[i+2] == '8') {
+      decoded_url[j++] = '(';
+      i += 2;
+    }
+    else if(i < len - 2 && url[i] == '%' && url[i+1] == '2' && url[i+2] == '9') {
+      decoded_url[j++] = ')';
+      i += 2;
+    }
+    else if(i < len - 2 && url[i] == '%' && url[i+1] == '2' && url[i+2] == '1') {
+      decoded_url[j++] = '!';
+      i += 2;
+    }
+    else if(i < len - 2 && url[i] == '%' && url[i+1] == '2' && url[i+2] == '7') {
+      decoded_url[j++] = '\'';
+      i += 2;
+    }
+    else if(i < len - 2 && url[i] == '%' && url[i+1] == '2' && url[i+2] == '2') {
+      decoded_url[j++] = '\"';
+      i += 2;
+    }
+    else if(i < len - 2 && url[i] == '%' && url[i+1] == '2' && url[i+2] == '6') {
+      decoded_url[j++] = '&';
+      i += 2;
+    }
+    else if(i < len - 2 && url[i] == '%' && url[i+1] == '2' && url[i+2] == 'B') {
+      decoded_url[j++] = '+';
+      i += 2;
+    }
+    else if(i < len - 2 && url[i] == '%' && url[i+1] == '2' && url[i+2] == 'D') {
+      decoded_url[j++] = '-';
+      i += 2;
+    }
+    else if(i < len - 2 && url[i] == '%' && url[i+1] == '3' && url[i+2] == 'F') {
+      decoded_url[j++] = '?';
+      i += 2;
+    }
+    else if(i < len - 2 && url[i] == '%' && url[i+1] == '2' && url[i+2] == '5') {
+      decoded_url[j++] = '%';
+      i += 2;
+    }
+    else {
+      decoded_url[j++] = url[i];
     }
   }
+
+  return decoded_url;
 }
 
 char *get_query_param(const char *buffer, const char *key) {
@@ -337,7 +391,10 @@ char *get_query_param(const char *buffer, const char *key) {
   strncpy(result, val_start, val_len);
   result[val_len] = '\0';
 
-  decode_url(result);
+  char *decoded_param = decode_url(result);
+  free(result);
 
-  return result;
+  printf("%s\n", decoded_param);
+
+  return decoded_param;
 }

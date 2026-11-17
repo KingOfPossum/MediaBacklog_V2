@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "utils.h"
 
+#include <stdio.h>
+
 char *clean_json(char *input) {
   if(input == NULL) {
     return strdup("");
