@@ -104,8 +104,12 @@ const checkForEndOfInput = () => {
   >
     <UButton
       label="+"
-      class="hover:cursor-pointer size-20"
-      :ui="{ label: 'ml-6 text-lg' }"
+      class="hover:cursor-pointer inline-flex items-center justify-center p-0 rounded-full
+        size-[14vw] text-[7vw]
+        sm:size-[10vw] sm:text-[5vw]
+        md:size-[8vw] md:text-[4vw]
+        lg:size-[5vw] lg:text-[2vw]
+      "
       @click="resetFields"
     />
 
