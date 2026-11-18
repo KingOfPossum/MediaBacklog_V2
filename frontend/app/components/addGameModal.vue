@@ -158,7 +158,7 @@ const checkForEndOfInput = () => {
 
             <div class="h-8">
               <UFormField
-                v-if="statusValue === 'Completed'"
+                v-if="statusValue === PlayStatus[PlayStatus.Completed]"
                 label="Rating"
               >
                 <RatingDisplay
