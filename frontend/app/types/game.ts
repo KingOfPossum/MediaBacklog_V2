@@ -9,4 +9,7 @@ export type Game = {
   consoles: string[]
   rating: number
   date: string
+  summary: string
+  platforms: string[]
+  genres: string[]
 }

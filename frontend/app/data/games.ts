@@ -23,7 +23,10 @@ export const useGames = () => {
         playTime: game['game_infos']['main_story_length'] > 0 ? Math.trunc(game['game_infos']['main_story_length'] / 3600) : -1,
         consoles: game['consoles'],
         rating: game['rating'],
-        date: game['add_date']
+        date: game['add_date'],
+        summary: game['igdb_infos']['summary'],
+        platforms: game['igdb_infos']['platforms'],
+        genres: game['igdb_infos']['genres']
       }
       newGames.push(newGame)
     }

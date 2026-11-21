@@ -1,4 +1,5 @@
 const baseUrl = 'http://localhost:1234/'
+// const baseUrl = 'http://172.16.1.192/'
 
 export async function makeHTTPGETRequest(url: string, params?: Record<string, any>) {
   let finalUrl = baseUrl + url

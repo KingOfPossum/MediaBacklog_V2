@@ -12,6 +12,7 @@ defineProps<{ game: Game }>()
     :ui="{ title: 'truncate' }"
     :title="game.name"
     class="hover:scale-110 hover:cursor-pointer transition-transform duration-400 delay-50 h-full"
+    @click="navigateTo({ path: '/game', query: { id: game.id } })"
   >
     <div class="flex flex-row gap-2">
       <div class="h-40 flex-1">

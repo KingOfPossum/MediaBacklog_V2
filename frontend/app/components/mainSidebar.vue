@@ -60,7 +60,7 @@ const items = ref<NavigationMenuItem[]>([
 
       <template #footer>
         <UAvatar
-          icon="i-lucide:circle-user-round"
+          src="/ProfilePicture.svg"
           size="2xl"
         />
         <span class="pl-10">Profile</span>
