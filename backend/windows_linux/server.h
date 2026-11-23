@@ -5,7 +5,9 @@
 extern "C" {
 #endif
 
-char *get_new_game(char *json);
+char *get_new_game_func(char *json);
+char *remove_game_func(char *json);
+
 char *get_game_func(char *request);
 char *get_library_func(char *request);
 char *clear_database_func(char *request);

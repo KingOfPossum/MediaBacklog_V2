@@ -71,9 +71,11 @@ void igdb_games_genre_add(sqlite3 *connection, int igdb_id, int genre_id);
 
 int game_exists_in_library(sqlite3 *connection, int user_id, int game_id);
 int library_add_game(sqlite3 *connection, int user_id, int game_id, char *status, int rating, char *date);
+void remove_game_from_library(int library_id);
 
 int library_console_entry_exists(sqlite3 *connection, int library_id, char *platform);
 void add_library_console_entry(sqlite3 *connection, int library_id, char *platform);
+void remove_library_console_entries(sqlite3 *connection, int library_id);
 
 APILibraryGameEntry add_game_to_library(char *name, char *platform, char *status, int rating, char *date, IGDBEntry game);
 

@@ -23,10 +23,11 @@ static void bind_requests() {
   bind_get_request("/clearDatabase", clear_database_func);
   bind_get_request("/IGDBGame", get_igdb_game_func);
 
-  bind_post_request("/newGame",get_new_game);
+  bind_post_request("/newGame", get_new_game_func);
+  bind_post_request("/removeGame", remove_game_func);
 }
 
-char *get_new_game(char *json) {
+char *get_new_game_func(char *json) {
   printf("-----------Adding new Game--------\n");
   
   char game_name[128];
@@ -54,6 +55,22 @@ char *get_new_game(char *json) {
   return returned_json;
 }
   
+char *remove_game_func(char *json) {
+  printf("--------Removing Game-------------\n");
+
+  int library_id;
+
+  sscanf(json, "{\"library_id\":%d}", &library_id);
+
+  printf("Removing Game (ID:%d) ...\n", library_id);
+
+  remove_game_from_library(library_id);
+
+  printf("----------------------------------\n\n");
+
+  return strdup("{\"msg\":\"Game deleted!\"}");  
+}
+
 char *get_game_func(char *request) {
   char *game_name = get_query_param(request, "name");
   char *game_platform = get_query_param(request, "platform");

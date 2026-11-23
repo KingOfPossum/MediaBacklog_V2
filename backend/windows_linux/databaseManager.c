@@ -340,6 +340,18 @@ int library_add_game(sqlite3 *connection, int user_id, int game_id, char *status
   return game_exists_in_library(connection, user_id,game_id);
 }
 
+void remove_game_from_library(int library_id) {
+  sqlite3 *connection = open_connection(db.file_name);
+
+  char library_id_str[16];
+
+  snprintf(library_id_str, sizeof(library_id_str), "%d", library_id);
+
+  remove_library_console_entries(connection, library_id);
+  
+  delete_sql(connection, games_library_table, "id=?", (char *[]){library_id_str}, 1);
+}
+
 int library_console_entry_exists(sqlite3 *connection, int library_id, char *platform) {
   char library_id_str[16];
   snprintf(library_id_str, sizeof(library_id_str), "%d", library_id);
@@ -362,6 +374,13 @@ void add_library_console_entry(sqlite3 *connection, int library_id, char *platfo
   snprintf(library_id_str, sizeof(library_id_str), "%d", library_id);
 
   insert_sql(connection, games_library_console_table, (char *[]){"library_id","console"}, 2, (char *[]){library_id_str, platform}, 2);
+}
+
+void remove_library_console_entries(sqlite3 *connection, int library_id) {
+  char library_id_str[16];
+  snprintf(library_id_str, sizeof(library_id_str), "%d", library_id);
+
+  delete_sql(connection, games_library_console_table, "library_id=?", (char *[]){library_id_str}, 1);
 }
 
 APIGameEntry get_game(sqlite3 *connection, int game_id, char *name) {

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useGames } from '~/data/games.ts'
+import DeleteGameModal from "~/components/gamePage/deleteGameModal.vue";
 
 definePageMeta({
   layout: 'main-layout'
@@ -83,6 +84,9 @@ const game = computed(() => {
               </h1>
               <RatingDisplay :rating="game.rating" />
             </div>
+          </div>
+          <div>
+            <DeleteGameModal :game-id="game.id"/>
           </div>
         </div>
       </div>

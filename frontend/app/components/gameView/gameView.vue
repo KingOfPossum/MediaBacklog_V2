@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import GameCard from '~/components/gameView/gameCard.vue'
+import AddGameModal from '~/components/gameView/addGameModal.vue'
+
 import { useGamesFilter } from '~/composables/gamesFilter.ts'
 import { useGames } from '~/data/games.ts'
 

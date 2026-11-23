@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import FilterPopover from '~/components/gameView/filterComponents/filterPopover.vue'
+
 import { useStatusFilter } from '~/composables/statusFilter.ts'
 
 const { allStatus, activatedStatus } = useStatusFilter()
