@@ -352,6 +352,18 @@ void remove_game_from_library(int library_id) {
   delete_sql(connection, games_library_table, "id=?", (char *[]){library_id_str}, 1);
 }
 
+void update_library_entry(int library_id, char *status, int rating) {
+  sqlite3 *connection = open_connection(db.file_name);
+
+  char library_id_str[16];
+  char rating_str[16];
+
+  snprintf(library_id_str, sizeof(library_id_str), "%d", library_id);
+  snprintf(rating_str, sizeof(rating_str), "%d", rating);
+
+  update_sql(connection, games_library_table, (char *[]){"status","rating"}, 2, (char *[]){status, rating_str}, 2, "id=?", (char *[]){library_id_str}, 1);
+}
+
 int library_console_entry_exists(sqlite3 *connection, int library_id, char *platform) {
   char library_id_str[16];
   snprintf(library_id_str, sizeof(library_id_str), "%d", library_id);

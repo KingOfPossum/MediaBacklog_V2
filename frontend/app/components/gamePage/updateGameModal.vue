@@ -1,21 +1,28 @@
 <script setup lang="ts">
-import {getStatusNames, PlayStatus} from '~/types/playStatus.ts'
+import { getStatusNames, PlayStatus } from '~/types/playStatus.ts'
 
 const props = defineProps<{ game: Game }>()
+const toast = useToast()
 
 const open = ref(false)
 
 const statusValue = ref(PlayStatus[props.game.status])
 const ratingValue = ref(props.game.rating)
 
-const onSubmit = () => {
+const onSubmit = async () => {
   const data = {
     id: props.game.id,
     status: statusValue.value,
     rating: statusValue.value === PlayStatus[PlayStatus.Completed] ? ratingValue.value : 0
   }
-  makeHTTPPOSTRequest('/updateGame', data)
+  await makeHTTPPOSTRequest('updateGame', data)
   open.value = false
+  toast.add({
+    title: 'Success',
+    description: 'Successfully updated game',
+    color: 'primary',
+    duration: 3000
+  })
 }
 
 console.log(getStatusNames())
@@ -23,7 +30,7 @@ console.log(getStatusNames())
 
 <template>
   <UModal
-    v-model="open"
+    v-model:open="open"
     title="Edit Game"
     :transition="true"
     :close="{

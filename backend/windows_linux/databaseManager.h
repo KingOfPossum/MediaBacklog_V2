@@ -72,6 +72,7 @@ void igdb_games_genre_add(sqlite3 *connection, int igdb_id, int genre_id);
 int game_exists_in_library(sqlite3 *connection, int user_id, int game_id);
 int library_add_game(sqlite3 *connection, int user_id, int game_id, char *status, int rating, char *date);
 void remove_game_from_library(int library_id);
+void update_library_entry(int library_id, char *status, int rating);
 
 int library_console_entry_exists(sqlite3 *connection, int library_id, char *platform);
 void add_library_console_entry(sqlite3 *connection, int library_id, char *platform);

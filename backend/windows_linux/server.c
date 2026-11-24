@@ -25,6 +25,7 @@ static void bind_requests() {
 
   bind_post_request("/newGame", get_new_game_func);
   bind_post_request("/removeGame", remove_game_func);
+  bind_post_request("/updateGame", update_game_func);
 }
 
 char *get_new_game_func(char *json) {
@@ -69,6 +70,24 @@ char *remove_game_func(char *json) {
   printf("----------------------------------\n\n");
 
   return strdup("{\"msg\":\"Game deleted!\"}");  
+}
+
+char *update_game_func(char *json) {
+  printf("----------Update Game-------------\n");
+
+  int library_id;
+  char status[128];
+  int rating;
+
+  sscanf(json, "{\"id\":%d,\"status\":\"%[^\"]\",\"rating\":%d}", &library_id, status, &rating);
+
+  printf("Updating Game (ID:%d, status: %s, rating:%d) ...\n", library_id, status, rating);
+
+  update_library_entry(library_id, status, rating);
+
+  printf("----------------------------------\n\n");
+
+  return strdup("{\"msg\":\"Game updated!\"}"); 
 }
 
 char *get_game_func(char *request) {
