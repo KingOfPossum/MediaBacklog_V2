@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useGames } from '~/data/games.ts'
-import DeleteGameModal from "~/components/gamePage/deleteGameModal.vue";
+import DeleteGameModal from '~/components/gamePage/deleteGameModal.vue'
+import UpdateGameModal from '~/components/gamePage/updateGameModal.vue'
 
 definePageMeta({
   layout: 'main-layout'
@@ -10,6 +11,9 @@ const { games } = useGames()
 
 const route = useRoute()
 const id = computed(() => Number(String(route.query.id ?? '')))
+
+console.log(id)
+
 const game = computed(() => {
   return games.value.find((g: Game) => g.id === id.value) ?? undefined
 })
@@ -19,8 +23,8 @@ const game = computed(() => {
   <div class="h-full w-full relative">
     <UButton
       icon="i-lucide-arrow-left"
-      @click="navigateTo('/')"
       class="absolute"
+      @click="navigateTo('/')"
     />
     <UContainer
       class="bg-accented rounded-lg p-5 flex flex-col gap-5 h-full w-full"
@@ -28,7 +32,7 @@ const game = computed(() => {
       <div class="flex flex-row flex-1 items-start justify-between gap-5">
         <div class="flex flex-col gap-5 flex-1">
           <h1 class="underline font-bold text-2xl">
-            {{ game.name ?? ' ' }}
+            {{ game.name }}
           </h1>
           <UContainer class="bg-blue-950 rounded-lg outline outline-black flex flex-col gap-2 p-2">
             <h1 class="font-bold uppercase text-center">
@@ -48,7 +52,10 @@ const game = computed(() => {
                 Genres:
               </h1>
               <div class="flex flex-row gap-2">
-                <div v-for="genre in game.genres" class="outline rounded-lg p-1">
+                <div
+                  v-for="genre in game.genres"
+                  class="outline rounded-lg p-1"
+                >
                   {{ genre }}
                 </div>
               </div>
@@ -67,9 +74,11 @@ const game = computed(() => {
             <div>
               <StatusDisplay :status="game.status" />
             </div>
-            <UButton label="Change Status" @click="console.log(game)"/>
           </div>
-          <div v-if="game.status === PlayStatus.Completed" class="flex flex-col gap-4">
+          <div
+            v-if="game.status === PlayStatus.Completed"
+            class="flex flex-col gap-4"
+          >
             <div>
               <h1>
                 Added on:
@@ -85,8 +94,9 @@ const game = computed(() => {
               <RatingDisplay :rating="game.rating" />
             </div>
           </div>
-          <div>
-            <DeleteGameModal :game-id="game.id"/>
+          <div class="flex flex-col gap-2">
+            <UpdateGameModal :game="game" />
+            <DeleteGameModal :game-id="game.id" />
           </div>
         </div>
       </div>

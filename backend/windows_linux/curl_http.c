@@ -25,7 +25,7 @@ static size_t writeMemoryCallback(void *contents, size_t size, size_t nmemb, voi
 }
 
 char *curl_make_igdb_request(char *url, char *query) {
-  printf("MAKE REQUEST\n");
+  printf("MAKE REQUEST: %s\n", url);
   CURL *curl;
   CURLcode res;
 

@@ -38,6 +38,7 @@ const removeGame = async () => {
     <UButton
       label="Delete Game"
       color="error"
+      icon="ep:delete-filled"
       @click="open=true"
     />
 
