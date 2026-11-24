@@ -27,9 +27,15 @@ const game = computed(() => {
     <UContainer
       class="bg-accented rounded-lg p-5 flex flex-col gap-5 h-full w-full"
     >
-      <div class="flex flex-row flex-1 items-start justify-between gap-5">
-        <MainGamePageContent :game="game" />
-        <SideGamePageContent :game="game" />
+      <div class="flex flex-row flex-1 divide-black divide-x-4 items-start justify-between">
+        <MainGamePageContent
+          :game="game"
+          class="pr-5"
+        />
+        <SideGamePageContent
+          :game="game"
+          class="pl-5"
+        />
       </div>
     </UContainer>
   </div>

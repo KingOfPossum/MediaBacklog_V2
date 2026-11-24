@@ -3,7 +3,7 @@ const props = defineProps<{ game: Game }>()
 </script>
 
 <template>
-  <div class="flex flex-col gap-5 flex-1">
+  <div class="h-full flex flex-col gap-5 flex-1">
     <h1 class="underline font-bold text-2xl">
       {{ game.name }}
     </h1>
