@@ -35,6 +35,7 @@ console.log(getStatusNames())
     <UButton
       label="Edit entry"
       icon="akar-icons:edit"
+      class="rounded-full"
     />
 
     <template #body>

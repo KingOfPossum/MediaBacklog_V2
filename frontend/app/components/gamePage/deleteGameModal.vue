@@ -39,6 +39,7 @@ const removeGame = async () => {
       label="Delete Game"
       color="error"
       icon="ep:delete-filled"
+      class="rounded-full"
       @click="open=true"
     />
 
