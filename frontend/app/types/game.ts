@@ -5,7 +5,9 @@ export type Game = {
   name: string
   img: string
   status: PlayStatus
-  playTime: number
+  mainStoryLength: number
+  mainExtraLength: number
+  completionistLength: number
   consoles: string[]
   rating: number
   date: string

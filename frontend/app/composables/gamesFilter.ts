@@ -26,7 +26,7 @@ export const useGamesFilter = () => {
       const searchFilter = (searchQuery.value.length > 0 && item.name.toLowerCase().includes(searchQuery.value.toLowerCase())) || searchQuery.value.length === 0
       const consoleFilter = item.consoles.some(console => activatedConsoles.value.includes(console))
       const statusFilter = activatedStatus.value.includes(PlayStatus[item.status])
-      const timeFilter = (item.playTime === -1) || (item.playTime > timeRange.value[0] && ((item.playTime < timeRange.value[1]) || (timeRange.value[1] >= 50)))
+      const timeFilter = (item.mainStoryLength === -1) || (item.mainStoryLength > timeRange.value[0] && ((item.mainStoryLength < timeRange.value[1]) || (timeRange.value[1] >= 50)))
       const ratingFilter = (item.rating >= minRating.value && item.rating <= maxRating.value) || (item.rating <= 0)
 
       return searchFilter && consoleFilter && statusFilter && timeFilter && ratingFilter
@@ -38,9 +38,9 @@ export const useGamesFilter = () => {
         return b.rating - a.rating
       } else if (filterType.value === 'time') {
         if (sortTimeAscending.value) {
-          return a.playTime - b.playTime
+          return a.mainStoryLength - b.mainStoryLength
         }
-        return b.playTime - a.playTime
+        return b.mainStoryLength - a.mainStoryLength
       } else {
         if (sortDateAscending.value) {
           return new Date(a.date).getTime() - new Date(b.date).getTime()

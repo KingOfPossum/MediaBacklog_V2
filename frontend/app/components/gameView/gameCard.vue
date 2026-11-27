@@ -39,7 +39,7 @@ defineProps<{ game: Game }>()
           </div>
           <div class="flex flex-col gap-1">
             <span>Duration:</span>
-            <PlayTimeDisplay :time="game.playTime" />
+            <PlayTimeDisplay :time="game.mainStoryLength" />
           </div>
           <div class="flex flex-col gap-1">
             <span>Status:</span>
