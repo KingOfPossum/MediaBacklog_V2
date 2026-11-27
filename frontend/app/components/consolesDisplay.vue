@@ -12,7 +12,10 @@ const normalizeConsole = (console: string) => {
       v-for="console in consoles"
       class="size-8"
     >
-      <img :src="`/consoleIcons/${normalizeConsole(console)}.svg`">
+      <img
+        :src="`/consoleIcons/${normalizeConsole(console)}.svg`"
+        :title="normalizeConsole(console)"
+      >
     </div>
   </div>
 </template>

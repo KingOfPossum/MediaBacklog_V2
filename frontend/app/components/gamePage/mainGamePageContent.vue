@@ -13,12 +13,14 @@ const props = defineProps<{ game: Game }>()
       </h1>
       <p>{{ game.summary }}</p>
     </UContainer>
-    <div>
-      <h1 class="font-bold">
-        Available on:
-      </h1>
+    <div class="flex flex-row justify-between">
       <div>
-        <ConsolesDisplay :consoles="game.platforms" />
+        <h1 class="font-bold">
+          Available on:
+        </h1>
+        <div>
+          <ConsolesDisplay :consoles="game.platforms" />
+        </div>
       </div>
       <div>
         <h1 class="font-bold">

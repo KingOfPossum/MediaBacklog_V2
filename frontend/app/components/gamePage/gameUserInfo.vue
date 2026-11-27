@@ -4,7 +4,9 @@ const props = defineProps<{ game: Game }>()
 
 <template>
   <div>
-    <h2>User:</h2>
+    <h2 class="font-bold">
+      User:
+    </h2>
     <div class="outline  rounded-lg p-2">
       <div class="flex flex-row gap-4">
         <h2>Status:</h2>
@@ -29,6 +31,12 @@ const props = defineProps<{ game: Game }>()
         <p>
           {{ game.date }}
         </p>
+      </div>
+      <div class="flex flex-row gap-2">
+        <h2>
+          Console:
+        </h2>
+        <ConsolesDisplay :consoles="game.consoles" />
       </div>
     </div>
   </div>
